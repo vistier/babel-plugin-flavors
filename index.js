@@ -1,6 +1,10 @@
 /**
  * Created by Adi(adi@imeth.cn) on 2018/2/21.
  */
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 let fs = require('fs');
 let path = require('path');
 let projectFolder = process.cwd();
@@ -140,7 +144,6 @@ function resolveImport(source, file, state) {
         parsedSourceName.name + correctExtension,
       );
 
-      // 判断替换文件是否存在
     // 判断替换文件是否存在
     if(pathname.indexOf(flavorFolderName) >= 0) return;
     // 不在指定目录下的文件不进行替换
@@ -150,7 +153,7 @@ function resolveImport(source, file, state) {
 
       let isExist = fs.existsSync(newPathname);
       if (isExist) {
-        expectedPath = mapToRelative(pathname, newPathname);
+        expectedPath = mapToRelative(file, newPathname);
       }
   }
 
@@ -160,7 +163,7 @@ function resolveImport(source, file, state) {
   return expectedPath !== source ? expectedPath : undefined
 }
 
-module.exports = function(babel) {
+exports.default = function(babel) {
   let t = babel.types;
 
   function checkRequire(path) {
